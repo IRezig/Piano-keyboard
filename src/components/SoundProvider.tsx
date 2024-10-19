@@ -7,7 +7,12 @@ interface SoundfontProviderTypes {
   format?: string
   soundfont?: string
   audioContext: AudioContext
-  render: (props) => JSX.Element
+  render: (props: {
+    isLoading: boolean
+    playNote: (midiNumber: number) => void
+    stopNote: (midiNumber: number) => void
+    stopAllNotes: () => void
+  }) => React.ReactNode
 }
 const SoundfontProvider = (props: SoundfontProviderTypes) => {
   const {
@@ -49,6 +54,7 @@ const SoundfontProvider = (props: SoundfontProviderTypes) => {
   }, [props.instrumentName])
 
   const playNote = (midiNumber: number) => {
+    console.log('playNote', midiNumber)
     audioContext.resume().then(() => {
       const audioNode = instrument && instrument.play(midiNumber)
       setActiveAudioNodes({
@@ -75,8 +81,8 @@ const SoundfontProvider = (props: SoundfontProviderTypes) => {
   // Clear any residual notes that don't get called with stopNote
   const stopAllNotes = () => {
     audioContext.resume().then(() => {
-      const activeAudioNodes = Object.values(activeAudioNodes)
-      activeAudioNodes.forEach((node: Player | null) => {
+      const myActiveAudioNodes = Object.values(activeAudioNodes)
+      myActiveAudioNodes.forEach((node: Player | null) => {
         if (node) {
           node.stop()
         }

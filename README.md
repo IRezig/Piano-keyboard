@@ -1,14 +1,12 @@
-![reactjs-vite-tailwindcss-boilerplate](https://user-images.githubusercontent.com/16243531/217138979-b854309c-4742-4275-a705-f9fec5158217.jpg)
-
 # Template link:
  https://github.com/joaopaulomoraes/reactjs-vite-tailwindcss-boilerplate
 
  # Emoji link:
  https://emoji.aranja.com/
 
-# React Tailwindcss Boilerplate build with Vite
+# Piano keyboard
 
-This is a boilerplate build with Vite, React 18, TypeScript, Vitest, Testing Library, TailwindCSS 3, Eslint and Prettier.
+This is a simple piano keyboard made with ReactJS, Vite, and Tailwindcss.
 
 ## What is inside?
 
@@ -27,11 +25,11 @@ This project uses many tools like:
 
 ### Install
 
-Create the project.
+Clone the repository.
 
 ```bash
-pnpm dlx degit joaopaulomoraes/reactjs-vite-tailwindcss-boilerplate my-app
-```
+git clone https://github.com/IRezig/Piano-keyboard.git
+``` 
 
 Access the project directory.
 
