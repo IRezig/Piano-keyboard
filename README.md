@@ -4,6 +4,10 @@
  # Emoji link:
  https://emoji.aranja.com/
 
+ Piano library link:
+ https://github.com/kevinsqi/react-piano?tab=readme-ov-file
+ 
+
 # Piano keyboard
 
 This is a simple piano keyboard made with ReactJS, Vite, and Tailwindcss.
