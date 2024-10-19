@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 interface SoundfontProviderTypes {
   instrumentName: InstrumentName
   hostname: string
-  format: string
-  soundfont: string
+  format?: string
+  soundfont?: string
   audioContext: AudioContext
   render: (props) => JSX.Element
 }
