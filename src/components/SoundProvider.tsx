@@ -54,7 +54,6 @@ const SoundfontProvider = (props: SoundfontProviderTypes) => {
   }, [props.instrumentName])
 
   const playNote = (midiNumber: number) => {
-    console.log('playNote', midiNumber)
     audioContext.resume().then(() => {
       const audioNode = instrument && instrument.play(midiNumber)
       setActiveAudioNodes({

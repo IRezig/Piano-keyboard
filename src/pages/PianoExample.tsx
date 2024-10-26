@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { CacheStorage, Reverb, SplendidGrandPiano } from 'smplr'
-import { ConnectMidi } from './ConnectMidi'
 import { PianoKeyboard } from './PianoKeyboard'
 import { getAudioContext } from './audio-context'
 import { LoadWithStatus, useStatus } from './useStatus'
@@ -35,20 +34,9 @@ export function PianoExample({ className }: { className?: string }) {
       <div className="mb-2 flex items-end gap-2">
         <h1 className="text-3xl">Piano</h1>
         <LoadWithStatus status={status} onClick={loadPiano} />
-        <ConnectMidi instrument={piano} />
       </div>
       <div></div>
       <div className={status !== 'ready' ? 'opacity-30' : ''}>
-        <div className="no-select mb-2 flex gap-4">
-          <button
-            className="rounded bg-zinc-700 px-3 py-0.5 shadow"
-            onClick={() => {
-              piano?.stop()
-            }}
-          >
-            Stop all
-          </button>
-        </div>
         <div className="no-select mb-2 flex gap-4">
           <div>Volume:</div>
           <input
@@ -78,7 +66,7 @@ export function PianoExample({ className }: { className?: string }) {
           />
         </div>
         <PianoKeyboard
-          borderColor="border-rose-700"
+          borderColor="border-rose-400"
           onPress={(note) => {
             if (!piano) return
             note.time = (note.time ?? 0) + piano.context.currentTime

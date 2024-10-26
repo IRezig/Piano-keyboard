@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Note, Range, Scale } from 'tonal'
 const buildOct = (base: number) =>
   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((n) => n + base)
@@ -30,10 +30,19 @@ export function PianoKeyboard({
   const [detune, setDetune] = useState(0)
   const [oct, setOct] = useState(60)
   const [sustain, setSustain] = useState(false)
-  const isPlaying = (midi: number) => false
+  const [playing, setPlaying] = useState<number[]>([])
+  const isPlaying = (midi: number) => playing.includes(midi)
+
+  useEffect(() => {
+    setTimeout(() => setPlaying([]), 2000)
+  }, [playing])
 
   function release(midi: number) {
     if (!sustain && onRelease) onRelease(midi)
+  }
+  const onPressNote = (note: PianoKeyboardNote) => {
+    setPlaying([...playing, note.note])
+    onPress(note)
   }
 
   return (
@@ -46,7 +55,9 @@ export function PianoKeyboard({
                 className={`accidental-key ${
                   isPlaying(midi) ? 'accidental-key--playing' : ''
                 }`}
-                onMouseDown={() => onPress({ note: midi, velocity, detune })}
+                onMouseDown={() =>
+                  onPressNote({ note: midi, velocity, detune })
+                }
                 onMouseUp={() => release(midi)}
               >
                 <div className={'text'}></div>
@@ -58,7 +69,7 @@ export function PianoKeyboard({
               className={`natural-key ${
                 isPlaying(midi) ? 'natural-key--playing' : ''
               }`}
-              onMouseDown={() => onPress({ note: midi, velocity, detune })}
+              onMouseDown={() => onPressNote({ note: midi, velocity, detune })}
               onMouseUp={() => release(midi)}
             >
               <div className={'text'}></div>
@@ -115,9 +126,7 @@ export function PianoKeyboard({
           className="rounded bg-zinc-900 px-1"
           onClick={() => {
             const degrees = Scale.degrees('C4 major')
-
             const midi = Range.numeric([1, 8, 1]).map(degrees).map(Note.midi)
-
             midi.map((midi, time) =>
               onPress({
                 note: midi ?? 0,
@@ -130,6 +139,24 @@ export function PianoKeyboard({
           }}
         >
           Test
+        </button>
+        <button
+          className="rounded bg-green-900 px-1"
+          onClick={() => {
+            const doMajeurChord = [60, 64, 67]
+            setPlaying([...playing, ...doMajeurChord])
+            doMajeurChord.forEach((midi) => {
+              onPress({
+                note: midi,
+                velocity: 80,
+                detune: 0,
+                time: 0,
+                duration: 2.0
+              })
+            })
+          }}
+        >
+          Do Majeur Chord
         </button>
       </div>
     </div>
