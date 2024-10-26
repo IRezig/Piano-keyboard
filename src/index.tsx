@@ -1,9 +1,15 @@
-import { createRoot } from 'react-dom/client'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import MyRouter from 'root'
+
 import 'tailwindcss/tailwind.css'
-import App from 'components/App'
 import '../gloabals.css'
+import { StrictMode } from 'react'
 
-const container = document.getElementById('root') as HTMLDivElement
-const root = createRoot(container)
-
-root.render(<App />)
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <BrowserRouter>
+      <MyRouter />
+    </BrowserRouter>
+  </StrictMode>
+)

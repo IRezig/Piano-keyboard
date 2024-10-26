@@ -1,5 +1,5 @@
 import { PianoExample } from 'pages/PianoExample'
-import PianoComponent from './Piano'
+import PianoComponent from 'pages/freePiano/Piano'
 import MyMenu from './Menu'
 
 const App = () => {

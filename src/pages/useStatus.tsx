@@ -2,17 +2,17 @@ import { useState } from 'react'
 
 export type Status = 'init' | 'loading' | 'ready' | 'error'
 
-export function useStatus() {
+export const useStatus = () => {
   return useState<Status>('init')
 }
 
-export function LoadWithStatus({
+export const LoadWithStatus = ({
   status,
   onClick
 }: {
   status: string
   onClick: () => void
-}) {
+}) => {
   return status === 'init' ? (
     <button
       className="rounded bg-zinc-900 px-2 text-rose-700"

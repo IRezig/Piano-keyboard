@@ -2,18 +2,24 @@ import { useState } from 'react'
 import { HomeOutlined, PieChartOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Menu } from 'antd'
+import { Link } from 'react-router-dom'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
 const items: MenuItem[] = [
   {
     key: 'home',
-    label: 'Home',
+    label: <Link to="/">Home</Link>,
     icon: <HomeOutlined />
   },
   {
     key: 'chords',
-    label: 'Chords',
+    label: <Link to="/chords">Chords</Link>,
+    icon: <PieChartOutlined />
+  },
+  {
+    key: 'piano-example',
+    label: <Link to="/piano-example">Piano Example</Link>,
     icon: <PieChartOutlined />
   }
 ]
@@ -22,7 +28,6 @@ const MyMenu = () => {
   const [current, setCurrent] = useState('home')
 
   const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e)
     setCurrent(e.key)
   }
 
