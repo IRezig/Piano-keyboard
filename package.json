@@ -23,7 +23,9 @@
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.1",
     "@next/font": "^14.2.15",
+    "antd": "^5.21.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-piano": "^3.1.3",
