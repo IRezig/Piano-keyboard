@@ -1,17 +1,17 @@
 import { Route, Routes } from 'react-router-dom'
 import { PianoExample } from './pages/PianoExample'
-import App from 'components/App'
-import PianoComponent from 'pages/freePiano/Piano'
+import Layout from 'components/Layout'
+import PianoComponent from 'pages/Piano/Piano'
+import Home from 'pages/Home'
 
 const MyRouter = () => {
   return (
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="piano-example" element={<PianoExample />} />
-      <Route path="chords" element={<PianoComponent />} />
-      {/* <Route index element={<Home />} /> */}
-      {/* <Route path="dashboard" element={<Dashboard />} />
-        <Route path="*" element={<NoMatch />} /> */}
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="piano-example" element={<PianoComponent />} />
+        <Route path="chords" element={<PianoExample />} />
+      </Route>
     </Routes>
   )
 }

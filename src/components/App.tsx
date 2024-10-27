@@ -1,21 +1,18 @@
+import Layout from './Layout'
+import { Route, Routes } from 'react-router-dom'
 import { PianoExample } from 'pages/PianoExample'
-import PianoComponent from 'pages/freePiano/Piano'
-import MyMenu from './Menu'
+import PianoComponent from 'pages/Piano/Piano'
+import Home from 'pages/Home'
 
 const App = () => {
   return (
-    <div className="grid content-center gap-4 bg-pink-200 p-4">
-      <MyMenu />
-      <main className={'mx-auto my-20 max-w-4xl p-4'}>
-        <div className="mb-16 flex items-end">
-          <h1 className="text-6xl font-bold">Piano</h1>
-        </div>
-        <div className="flex flex-col gap-8">
-          <PianoComponent />
-          <PianoExample />
-        </div>
-      </main>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="piano-example" element={<PianoComponent />} />
+        <Route path="chords" element={<PianoExample />} />
+      </Route>
+    </Routes>
   )
 }
 
