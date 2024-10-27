@@ -1,6 +1,6 @@
 import Layout from './Layout'
 import { Route, Routes } from 'react-router-dom'
-import { PianoExample } from 'pages/PianoExample'
+import PianoExample from 'pages/PianoExample'
 import PianoComponent from 'pages/Piano/Piano'
 import Home from 'pages/Home'
 

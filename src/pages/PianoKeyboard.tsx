@@ -1,4 +1,5 @@
 'use client'
+import { Select } from 'antd'
 
 import { useEffect, useState } from 'react'
 import { Note, Range, Scale } from 'tonal'
@@ -6,6 +7,24 @@ const buildOct = (base: number) =>
   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((n) => n + base)
 
 const isBlack = (midi: number) => [1, 3, 6, 8, 10].includes(midi % 12)
+const chords = {
+  Do: [60, 64, 67],
+  Ré: [62, 65, 69],
+  Mi: [64, 67, 71],
+  Fa: [65, 69, 72],
+  Sol: [67, 71, 74],
+  La: [69, 72, 76],
+  Si: [71, 74, 77]
+}
+const ChordsOptions = [
+  { value: '[60, 64, 67]', label: 'Do' },
+  { value: '[62, 65, 69]', label: 'Ré' },
+  { value: '[64, 67, 71]', label: 'Mi' },
+  { value: '[65, 69, 72]', label: 'Fa' },
+  { value: '[67, 71, 74]', label: 'Sol' },
+  { value: '[69, 72, 76]', label: 'La' },
+  { value: '[71, 74, 77]', label: 'Si' }
+]
 
 type PianoKeyboardNote = {
   note: number
@@ -15,30 +34,41 @@ type PianoKeyboardNote = {
   duration?: number
 }
 
-export function PianoKeyboard({
-  className,
-  borderColor = 'border-blue-700',
-  onPress,
-  onRelease
-}: {
+interface PianoKeyboardProps {
   className?: string
   borderColor?: string
   onPress: (note: PianoKeyboardNote) => void
   onRelease?: (midi: number) => void
-}) {
-  const [velocity, setVelocity] = useState(100)
-  const [detune, setDetune] = useState(0)
-  const [oct, setOct] = useState(60)
-  const [sustain, setSustain] = useState(false)
+}
+
+export function PianoKeyboard(props: PianoKeyboardProps) {
+  const { className, borderColor, onPress, onRelease } = props
+  const oct = 60
+  const velocity = 100
+  const detune = 0
   const [playing, setPlaying] = useState<number[]>([])
   const isPlaying = (midi: number) => playing.includes(midi)
+
+  const handleChange = (value: string) => {
+    const chordNotes = JSON.parse(value)
+    setPlaying([...playing, ...chordNotes])
+    chordNotes.forEach((midi: number) => {
+      onPress({
+        note: midi,
+        velocity: 80,
+        detune: 0,
+        time: 0,
+        duration: 2.0
+      })
+    })
+  }
 
   useEffect(() => {
     setTimeout(() => setPlaying([]), 2000)
   }, [playing])
 
   function release(midi: number) {
-    if (!sustain && onRelease) onRelease(midi)
+    if (onRelease) onRelease(midi)
   }
   const onPressNote = (note: PianoKeyboardNote) => {
     setPlaying([...playing, note.note])
@@ -78,50 +108,6 @@ export function PianoKeyboard({
         )}
       </div>
       <div className="mt-1 flex items-center gap-1">
-        <div>
-          Octave: {oct}-{oct + 12 + 11}
-        </div>
-        <button
-          className="rounded bg-zinc-900 px-1"
-          onClick={() => {
-            setOct(oct - 12)
-          }}
-        >
-          -
-        </button>
-        <button
-          className="rounded bg-zinc-900 px-1"
-          onClick={() => {
-            setOct(oct + 12)
-          }}
-        >
-          +
-        </button>
-
-        <div className="ml-3">Velocity: {velocity}</div>
-        <input
-          type="range"
-          min={0}
-          max={127}
-          value={velocity}
-          onChange={(e) => setVelocity(e.target.valueAsNumber)}
-        />
-        <div className="ml-3">Detune: {detune}</div>
-        <input
-          type="range"
-          min={-100}
-          max={100}
-          value={detune}
-          onChange={(e) => setDetune(e.target.valueAsNumber)}
-        />
-
-        <input
-          className="ml-3"
-          type="checkbox"
-          checked={sustain}
-          onChange={(e) => setSustain(e.target.checked)}
-        />
-        <div className="">Sustain</div>
         <button
           className="rounded bg-zinc-900 px-1"
           onClick={() => {
@@ -140,6 +126,13 @@ export function PianoKeyboard({
         >
           Test
         </button>
+        <Select
+          placeholder="Select a chord"
+          style={{ width: 120 }}
+          onChange={handleChange}
+          options={ChordsOptions}
+        />
+
         <button
           className="rounded bg-green-900 px-1"
           onClick={() => {

@@ -9,13 +9,13 @@ import { LoadWithStatus, useStatus } from './useStatus'
 let reverb: Reverb | undefined
 let storage: CacheStorage | undefined
 
-export function PianoExample({ className }: { className?: string }) {
+const PianoExample = ({ className }: { className?: string }) => {
   const [piano, setPiano] = useState<SplendidGrandPiano | undefined>(undefined)
   const [status, setStatus] = useStatus()
-  const [reverbMix, setReverbMix] = useState(0.0)
+  const reverbMix = 0.0
   const [volume, setVolume] = useState(100)
 
-  function loadPiano() {
+  const loadPiano = () => {
     if (piano) return
     setStatus('loading')
     const context = getAudioContext()
@@ -35,9 +35,8 @@ export function PianoExample({ className }: { className?: string }) {
         <h1 className="text-3xl">Piano</h1>
         <LoadWithStatus status={status} onClick={loadPiano} />
       </div>
-      <div></div>
       <div className={status !== 'ready' ? 'opacity-30' : ''}>
-        <div className="no-select mb-2 flex gap-4">
+        <div className="mb-2 flex gap-4">
           <div>Volume:</div>
           <input
             type="range"
@@ -49,19 +48,6 @@ export function PianoExample({ className }: { className?: string }) {
               const volume = e.target.valueAsNumber
               piano?.output.setVolume(volume)
               setVolume(volume)
-            }}
-          />
-          <div>Reverb:</div>
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.001}
-            value={reverbMix}
-            onChange={(e) => {
-              const mix = e.target.valueAsNumber
-              piano?.output.sendEffect('reverb', mix)
-              setReverbMix(mix)
             }}
           />
         </div>
@@ -80,3 +66,5 @@ export function PianoExample({ className }: { className?: string }) {
     </div>
   )
 }
+
+export default PianoExample
