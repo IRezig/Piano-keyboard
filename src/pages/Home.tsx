@@ -8,19 +8,19 @@ const Home = () => {
           <Card
             title="Practice Chords"
             description="This is a description for the first card. It provides a brief summary of the content within the card."
-            imageSrc="./src/assets/handsPiano.jpg"
+            imageSrc="./src/assets/images/handsPiano.jpg"
             pageLink="/chords"
           />
           <Card
             title="Play with Piano"
             description="This is a description for the first card. It provides a brief summary of the content within the card."
-            imageSrc="./src/assets/dancingSolfege.jpg"
+            imageSrc="./src/assets/images/dancingSolfege.jpg"
             pageLink="/piano-example"
           />
           <Card
             title="Practice Songs"
             description="This is a description for the first card. It provides a brief summary of the content within the card."
-            imageSrc="./src/assets/flowersKeyboard.jpg"
+            imageSrc="./src/assets/images/flowersKeyboard.jpg"
             pageLink="/songs"
           />
         </div>
