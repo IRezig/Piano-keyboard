@@ -19,7 +19,12 @@ const items: MenuItem[] = [
   },
   {
     key: 'piano-example',
-    label: <Link to="/piano-example">Piano Example</Link>,
+    label: <Link to="/piano-example">Play Piano</Link>,
+    icon: <PieChartOutlined />
+  },
+  {
+    key: 'piano-example',
+    label: <Link to="/piano-example">Practice a Song</Link>,
     icon: <PieChartOutlined />
   }
 ]
