@@ -75,6 +75,24 @@ export function PianoKeyboard(props: PianoKeyboardProps) {
     onPress(note)
   }
 
+  const playAllChords = () => {
+    const chordsNotes = Object.values(chords)
+    chordsNotes.forEach((chordNotes, time) => {
+      setTimeout(() => {
+        setPlaying([...playing, ...chordNotes])
+        chordNotes.forEach((midi) => {
+          onPress({
+            note: midi,
+            velocity: 80,
+            detune: 0,
+            time: time,
+            duration: 2.0
+          })
+        })
+      }, time * 2000)
+    })
+  }
+
   return (
     <div className={className}>
       <div className={`piano-container border-t-8 ${borderColor}`}>
@@ -150,6 +168,12 @@ export function PianoKeyboard(props: PianoKeyboardProps) {
           }}
         >
           Do Majeur Chord
+        </button>
+        <button
+          className="rounded bg-green-900 px-1"
+          onClick={() => playAllChords()}
+        >
+          All chords
         </button>
       </div>
     </div>
