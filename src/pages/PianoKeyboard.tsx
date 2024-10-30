@@ -63,10 +63,6 @@ export function PianoKeyboard(props: PianoKeyboardProps) {
     })
   }
 
-  useEffect(() => {
-    setTimeout(() => setPlaying([]), 2000)
-  }, [playing])
-
   function release(midi: number) {
     if (onRelease) onRelease(midi)
   }
@@ -74,18 +70,24 @@ export function PianoKeyboard(props: PianoKeyboardProps) {
     setPlaying([...playing, note.note])
     onPress(note)
   }
+  useEffect(() => {
+    const timeout = setTimeout(() => setPlaying([]), 4000)
+    return () => clearTimeout(timeout)
+  }, [playing])
 
   const playAllChords = () => {
     const chordsNotes = Object.values(chords)
-    chordsNotes.forEach((chordNotes, time) => {
+    chordsNotes.forEach((chordNote, time) => {
       setTimeout(() => {
-        setPlaying([...playing, ...chordNotes])
-        chordNotes.forEach((midi) => {
+        setPlaying([])
+        setPlaying((prevPlaying) => [...prevPlaying, ...chordNote])
+        chordNote.forEach((midi) => {
+          console.log('midi', time, midi)
           onPress({
             note: midi,
             velocity: 80,
             detune: 0,
-            time: time,
+            time: 2,
             duration: 2.0
           })
         })
